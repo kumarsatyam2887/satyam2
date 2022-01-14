@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="calculator2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+<div class="container2">
+   <div class="box2">
+     <div class="bix2">
+     	<div id="box8"><h1 id="score">0</h1></div>
+     	<div id="box9"><img style="height: 15vh;" src="images__2_-removebg-preview.png" alt=""></div>
+     	<div id="box10"><h1 id="timer">300</h1></div>
+     	<div id="box11"><h1>
+     		<span id="first">1</span>
+     		+
+     		<span id="second">2</span>
+     		=
+     		<span id="answer">3</span>
+     	</h1></div>
+     	<div id="box12">
+
+     		<span id="tick"><img style="height: 11vh;" src="images__1_-removebg-preview.png" alt=""></span>
+     		<span id="cross"><img src="images__5_-removebg-preview.png" style="height: 10vh;" alt=""></span>
+
+     	</div>
+     </div>
+   </div>
+ </div>
+
+ <script>
+ 	let score = document.getElementById('score')
+ 	let timer = document.getElementById('timer')
+ 	let first = document.getElementById('first')
+ 	let second = document.getElementById('second')
+ 	let answer = document.getElementById('answer')
+ 	let giveAnswer = false
+ 	let tick = document.getElementById('tick')
+ 	let cross = document.getElementById('cross')
+
+ 	let checkArr = [true,false]
+
+localStorage.setItem("maxScore",0)
+localStorage.setItem("score",0)
+
+	let time;
+
+	function timeInterval () {
+		timer.innerText = parseInt(timer.innerText - 1)
+		if(timer.innerText<=0){
+			clearInterval(time);
+			window.location.href = "calculator1.html"
+
+		}
+	}
+
+ 	function random () {
+ 		return Math.ceil(Math.random()*30)
+ 	}
+
+
+ 	function init () {
+ 		let check = checkArr[Math.ceil(Math.random()*2)-1]
+ 		clearInterval(time)
+ 		time = setInterval(timeInterval,10)
+ 		console.log(check)
+ 		first.innerText = random()
+ 		second.innerText = random()
+ 		if(check==true){
+ 			answer.innerText  = parseInt(first.innerText) +parseInt(second.innerText)
+ 		}else{
+ 			answer.innerText = Math.ceil(Math.random()*30)
+ 		}
+ 		giveAnswer = false
+
+
+
+
+ 	}
+
+ 	init()
+
+ 
+
+ 	tick.addEventListener("click",()=>{
+ 		giveAnswer = true
+ 		clearInterval(time)
+ 			timer.innerText = 300
+ 		if(parseInt(first.innerText)+parseInt(second.innerText) == parseInt(answer.innerText)){
+ 			console.log('first')
+ 			score.innerText = parseInt(score.innerText) + 50
+ 			init();
+ 			let max = parseInt(localStorage.getItem("maxScore"))
+ 			if(max<score.innerText){
+ 				localStorage.setItem("maxScore",score.innerText)
+ 			}
+
+ 			localStorage.setItem("score",score.innerText)
+
+ 		}else{
+ 			
+ 			window.location.href = "calculator1.html"
+ 		}
+ 		
+ 		
+
+ 	})
+
+
+	cross.addEventListener("click",()=>{
+ 		giveAnswer = true
+ 		clearInterval(time)
+ 			timer.innerText = 300
+ 		if(parseInt(first.innerText)+parseInt(second.innerText) !== parseInt(answer.innerText)){
+ 			score.innerText = parseInt(score.innerText) + 50
+ 			init();
+ 			let max = parseInt(localStorage.getItem("maxScore"))
+ 			if(max<score){
+ 				localStorage.setItem("maxScore",score.innerText)
+ 			}
+
+ 			localStorage.setItem("score",score.innerText)
+
+ 		}else{
+ 			
+ 			window.location.href = "calculator1.html"
+ 		}
+ 			
+ 		
+
+ 	})
+
+
+
+
+ </script>
+
+</body>
+</html>
